@@ -1,6 +1,6 @@
 "use client"
 import { PlusSquareIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Column, Id, Task } from "@/Types";
 import ColumnContainer from "./_components/ColumnsContainer";
 import {
@@ -102,6 +102,8 @@ const defaultTasks: Task[] = [
 ];
 
 function KanbanBoard() {
+
+  const [render, setRender] = useState(false)
   const [columns, setColumns] = useState<Column[]>(defaultCols);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [tasks, setTasks] = useState<Task[]>(defaultTasks);
@@ -115,6 +117,12 @@ function KanbanBoard() {
       },
     })
   );
+
+  useEffect(() => {
+    setRender(true)
+  }, [])
+
+  if (!render) return null
 
   return (
     <div
